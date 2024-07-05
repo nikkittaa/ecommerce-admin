@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useRouter } from "next/router";
+import { SnackbarProvider, useSnackbar } from "notistack";
 import { useState } from "react";
 
 export default function ProductForm({_id, title : exTitle,
@@ -11,6 +12,7 @@ export default function ProductForm({_id, title : exTitle,
     const [ price, setPrice] = useState(exPrice || '');
     const [ goToProducts, setGoToProducts] = useState(false);
     const router = useRouter();
+    const {enqueueSnackbar} = useSnackbar();
     
     
     async function saveProduct(ev){
@@ -18,11 +20,14 @@ export default function ProductForm({_id, title : exTitle,
         const data = {title, description, price};
         if(_id){
             await axios.put('/api/products', {...data, _id});
+            enqueueSnackbar('Product editted successfully!', {variant: 'success'});
         }else{
-            await axios.post('/api/products');
+            await axios.post('/api/products', data);
+            enqueueSnackbar('Product added successfully!', {variant: 'success'});
         }
        
         setGoToProducts(true);
+
     }
 
     if(goToProducts){
