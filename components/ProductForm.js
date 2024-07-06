@@ -2,25 +2,27 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import { useState } from "react";
+import Spinner from "./Spinner";
 
 export default function ProductForm({_id, title : exTitle,
     description: exDescription, 
     price: exPrice,
-    images
+    images: exImages,
     }){
 
     const [title, setTitle] = useState(exTitle || '');
     const [description, setDescription] = useState(exDescription || '');
     const [ price, setPrice] = useState(exPrice || '');
-
+    const [images, setImages] = useState(exImages || []);
     const [ goToProducts, setGoToProducts] = useState(false);
+    const [isUploading, setIsUploading] = useState(false);
     const router = useRouter();
     const {enqueueSnackbar} = useSnackbar();
     
     
     async function saveProduct(ev){
         ev.preventDefault();
-        const data = {title, description, price};
+        const data = {title, description, price, images};
         if(_id){
             await axios.put('/api/products', {...data, _id});
             enqueueSnackbar('Product editted successfully!', {variant: 'success'});
@@ -38,6 +40,7 @@ export default function ProductForm({_id, title : exTitle,
     }
 
     async function uploadImages(ev){
+        setIsUploading(true);
         const files = ev.target?.files;
         if(files?.length > 0){
             const data = new FormData();
@@ -45,9 +48,13 @@ export default function ProductForm({_id, title : exTitle,
                 data.append('file', file);
             }
             const res = await axios.post('/api/upload', data);
-            console.log(res.data);
+            //console.log(res.data);
+            setImages(oldImages => {
+                return [...oldImages, ...res.data];
+            })
 
         }
+        setIsUploading(false);
     }
     return (
         
@@ -59,7 +66,18 @@ export default function ProductForm({_id, title : exTitle,
                 onChange = {ev => setTitle(ev.target.value)}
             />
             <label>Photos</label>
-            <div className = 'mb-2'>
+            <div className = 'mb-2 flex flex-wrap gap-2'>
+                {!!images?.length && images.map(link => (
+                    <div key = {link} className = 'h-24'>
+                        <img src = {link} alt = 'product image' className = 'rounded-xl'/>
+                    </div>
+                ))
+                }
+                {isUploading && (
+                    <div classNmae = 'h-24 flex justify-center items-center rounded-xl p-1'>
+                        <Spinner/>
+                    </div>
+                )}
                 <label className = 'w-24 h-24 rounded-xl flex flex-col items-center justify-center text-sm text-gray-600 bg-gray-300 cursor-pointer'>
                 <input type = 'file' onChange = {uploadImages} className = 'hidden'/>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
@@ -67,9 +85,7 @@ export default function ProductForm({_id, title : exTitle,
                 </svg>Upload
                 
                 </label>
-                {!images?.length && (
-                    <div>No photos uploaded</div>
-                )}
+                
             </div>
             <label>Description</label>
             <textarea placeholder = "Description"
