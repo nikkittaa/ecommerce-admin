@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import { useState } from "react";
 import Spinner from "./Spinner";
+import { ReactSortable } from "react-sortablejs";
 
 export default function ProductForm({_id, title : exTitle,
     description: exDescription, 
@@ -56,6 +57,11 @@ export default function ProductForm({_id, title : exTitle,
         }
         setIsUploading(false);
     }
+
+    function updateImagesOrder(images){
+        setImages(images);
+    }
+
     return (
         
             <form onSubmit = {saveProduct}>
@@ -67,12 +73,17 @@ export default function ProductForm({_id, title : exTitle,
             />
             <label>Photos</label>
             <div className = 'mb-2 flex flex-wrap gap-2'>
-                {!!images?.length && images.map(link => (
+               <ReactSortable 
+                list = {images} 
+                className = 'flex flex-wrap gap-2'
+                setList = {updateImagesOrder}>
+               {!!images?.length && images.map(link => (
                     <div key = {link} className = 'h-24'>
                         <img src = {link} alt = 'product image' className = 'rounded-xl'/>
                     </div>
                 ))
                 }
+               </ReactSortable>
                 {isUploading && (
                     <div classNmae = 'h-24 flex justify-center items-center rounded-xl p-1'>
                         <Spinner/>

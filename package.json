@@ -21,7 +21,10 @@
     "notistack": "^3.0.1",
     "react": "^18",
     "react-dom": "^18",
-    "react-spinners": "^0.14.1"
+    "react-sortable": "^2.0.0",
+    "react-sortablejs": "^6.1.4",
+    "react-spinners": "^0.14.1",
+    "sortablejs": "^1.15.2"
   },
   "devDependencies": {
     "eslint": "^8",
