@@ -14,7 +14,11 @@ export default async function handler(req, res){
     }
 
     if(method == 'GET'){
-        res.json(await Category.find().populate('parent'));
+        if(req.query?.id){
+            res.json(await Category.findOne({_id:req.query.id}).populate('parent'));
+        }else{
+            res.json(await Category.find().populate('parent'));
+        }
     }
 
     if(method == 'DELETE'){
@@ -26,7 +30,7 @@ export default async function handler(req, res){
 
     if(method === 'PUT'){
         const {categoryName, parent, _id} = req.body;
-        await Product.updateOne({_id}, {categoryName, parent});
+        await Category.updateOne({_id}, {categoryName, parent});
         res.json(true);
       }
 }
