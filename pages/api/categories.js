@@ -29,8 +29,11 @@ export default async function handler(req, res){
     }
 
     if(method === 'PUT'){
-        const {categoryName, parent, _id} = req.body;
-        await Category.updateOne({_id}, {categoryName, parent});
+        var {categoryName, parent, _id} = req.body;
+        if(parent === '0'){
+            parent = null;
+        }
+        await Category.updateOne({_id}, {categoryName, parent: parent || null});
         res.json(true);
       }
 }
