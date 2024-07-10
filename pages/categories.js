@@ -10,6 +10,7 @@ export default function Categories(){
     const [categories, setCategories] = useState([]);
     const [edited, setEdited] = useState(null);
     const {enqueueSnackbar} = useSnackbar();
+    const [ properties, setProperties] = useState([]);
 
     async function fetchCategories(){
         axios.get('/api/categories').then((response) => {
@@ -45,6 +46,12 @@ export default function Categories(){
         setParent(category.parent? category.parent._id : '');
         
     }
+
+    function addProperty(){
+        setProperties(prev => {
+            return [...prev, {name: '', values: ''}]
+        });
+    }
     
 
     return(
@@ -53,13 +60,13 @@ export default function Categories(){
             <form onSubmit = {saveCategory}>
             <label>{edited? `Edit category ${edited.categoryName}`:'New category Name'}</label>
             <div className = 'flex gap-1'>
-            <input className = 'mb-0' 
+            <input  
                 type = "text" 
                 placeholder = {'Category name'}
                 value = {categoryName}
                 onChange = {(ev) => setCategoryName(ev.target.value)}
                 />
-                <select className = 'mb-0' 
+                <select
                     onChange = {ev => setParent(ev.target.value)}
                     value = {parent}>
                     <option value = '0'>No parent category</option>
@@ -67,8 +74,24 @@ export default function Categories(){
                         <option key = {category._id} value = {category._id}>{category.categoryName}</option>
                     ))}
                 </select>
+                </div>
+                <div className = 'mb-2'>
+                    <label className = 'block'>Properties</label>
+                    <button onClick = {addProperty} type = 'button' className = 'btn-default text-sm'>Add new property</button>
+                    {properties.length > 0 && properties.map(property => (
+                        <div className = 'mt-2 flex gap-1'>
+                            <input type = 'text' 
+                                value = {property.name} 
+                                onChange = {() => handlePropertyNameChange(property)}
+                                placeholder = 'property name : (example:color)'/>
+                            <input type = 'text' 
+                                value = {property.values} 
+                                placeholder = 'values, comma separated'/>
+                        </div>
+                    ))}
+                </div>
             <button type = 'submit' className = 'btn-primary'>Save</button>
-            </div>
+            
             </form>
             <table className= 'basic mt-4'>
                 <thead>
