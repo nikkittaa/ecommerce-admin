@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useRouter } from "next/router";
 import { SnackbarProvider, useSnackbar } from "notistack";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Spinner from "./Spinner";
 import { ReactSortable } from "react-sortablejs";
 
@@ -9,6 +9,7 @@ export default function ProductForm({_id, title : exTitle,
     description: exDescription, 
     price: exPrice,
     images: exImages,
+    category: exCategory
     }){
 
     const [title, setTitle] = useState(exTitle || '');
@@ -19,11 +20,19 @@ export default function ProductForm({_id, title : exTitle,
     const [isUploading, setIsUploading] = useState(false);
     const router = useRouter();
     const {enqueueSnackbar} = useSnackbar();
+    const [categories, setCategories] = useState([]);
+    const [category, setCategory] = useState(exCategory || '');
     
-    
+    useEffect(() => {
+        axios.get('/api/categories').then(result => {
+            setCategories(result.data);
+        });
+
+    }, []);
+
     async function saveProduct(ev){
         ev.preventDefault();
-        const data = {title, description, price, images};
+        const data = {title, description, price, images, category};
         if(_id){
             await axios.put('/api/products', {...data, _id});
             enqueueSnackbar('Product editted successfully!', {variant: 'success'});
@@ -71,6 +80,13 @@ export default function ProductForm({_id, title : exTitle,
                 value = {title}
                 onChange = {ev => setTitle(ev.target.value)}
             />
+            <label>Category</label>
+            <select value = {category} onChange = {ev => setCategory(ev.target.value)}>
+                <option value = ''>No category</option>
+                {categories.length > 0 && categories.map(category => (
+                    <option value = {category._id}>{category.categoryName}</option>
+                ))}
+            </select>
             <label>Photos</label>
             <div className = 'mb-2 flex flex-wrap gap-2'>
                <ReactSortable 
