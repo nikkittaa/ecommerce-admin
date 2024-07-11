@@ -25,18 +25,27 @@ export default function Categories(){
     async function saveCategory(ev){
         ev.preventDefault();
 
+        const data = {
+            categoryName,
+            parent,
+            properties: properties.map(p => ({name :p.name, 
+                values : p.values.split(','),
+            })),
+        };
         if(edited){
             const _id = edited._id;
-            await axios.put('/api/categories?id='+_id, {categoryName, parent,_id});
+            data._id = _id;
+            await axios.put('/api/categories?id='+_id, data);
             enqueueSnackbar('Category editted successfully!', {variant: 'success'});
             setEdited(null);
         }
 
         else{
-            await axios.post('/api/categories', {categoryName, parent});
+            await axios.post('/api/categories', data);
         }
         setCategoryName('');
         setParent('');
+        setProperties([]);
         fetchCategories();
     }
 
@@ -52,8 +61,33 @@ export default function Categories(){
             return [...prev, {name: '', values: ''}]
         });
     }
-    
 
+    function handlePropertyNameChange(index, property, newName){
+        setProperties(prev =>{
+            const properties = [...prev];
+            properties[index].name = newName;
+            return properties;
+        });
+    } 
+
+    function handlePropertyValueChange(index, property, newValues){
+        setProperties(prev =>{
+            const properties = [...prev];
+            properties[index].values= newValues;
+            return properties;
+        });
+        
+    } 
+
+    function removeProperty(index){
+        setProperties(prev => {
+            const newProperties = [...prev].filter((p, pIndex) => {
+                return pIndex != index;
+            });
+            return newProperties
+        });
+    }
+    
     return(
         <Layout>
             <h1>Categories</h1>
@@ -78,26 +112,44 @@ export default function Categories(){
                 <div className = 'mb-2'>
                     <label className = 'block'>Properties</label>
                     <button onClick = {addProperty} type = 'button' className = 'btn-default text-sm'>Add new property</button>
-                    {properties.length > 0 && properties.map(property => (
+                    {properties.length > 0 && properties.map((property, index) => (
                         <div className = 'mt-2 flex gap-1'>
                             <input type = 'text' 
                                 value = {property.name} 
-                                onChange = {() => handlePropertyNameChange(property)}
+                                onChange = {(ev) => handlePropertyNameChange(index, property, ev.target.value)}
                                 placeholder = 'property name : (example:color)'/>
                             <input type = 'text' 
                                 value = {property.values} 
+                                onChange = {(ev) => handlePropertyValueChange(index, property, ev.target.value)}
                                 placeholder = 'values, comma separated'/>
+                                <button 
+                                    type = 'button'
+                                    onClick = {ev => removeProperty(index)}
+                                    className = 'btn-default mb-1'>Remove</button>
                         </div>
                     ))}
                 </div>
+            <div className = 'flex gap-1'>
+                {edited && (
+                    <button type = 'button' onClick = {() =>{
+                         setEdited(null);
+                         setCategoryName('');
+                         setParent('');
+                    }} className = 'btn-default'>Cancel</button>
+                )
+
+                }
             <button type = 'submit' className = 'btn-primary'>Save</button>
+            </div>
             
             </form>
-            <table className= 'basic mt-4'>
+            {!edited && (
+                <table className= 'basic mt-4'>
                 <thead>
                     <tr>
                         <td>Catgory Name</td>
                         <td>Parent Category</td>
+                        <td></td>
                     </tr>
                 </thead>
                 <tbody>
@@ -126,6 +178,8 @@ export default function Categories(){
                 </tbody>
 
             </table>
+            )}
+            
 
         </Layout>
 
