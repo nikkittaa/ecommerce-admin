@@ -53,6 +53,11 @@ export default function Categories(){
         setEdited(category);
         setCategoryName(category.categoryName);
         setParent(category.parent? category.parent._id : '');
+        setProperties(category.properties.map(({name, values}) => (
+            {name,
+                values: values.join(',')
+            }
+        )));
         
     }
 
@@ -135,6 +140,7 @@ export default function Categories(){
                          setEdited(null);
                          setCategoryName('');
                          setParent('');
+                         setProperties([]);
                     }} className = 'btn-default'>Cancel</button>
                 )
 
