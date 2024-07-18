@@ -1,10 +1,15 @@
 import { mongooseConnect } from "@/lib/mongoose";
 import { Category } from "@/models/Category";
+import { getServerSession } from "next-auth";
+import authOptions, { isAdminRequest } from "./auth/[...nextauth]";
+import { getSession } from "next-auth/react";
 
 export default async function handler(req, res){
     const {method} = req;
 
     await mongooseConnect();
+
+    await isAdminRequest(req,res);
     
     if(method == 'POST'){
         const {categoryName, parent, properties} = req.body;

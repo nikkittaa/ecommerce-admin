@@ -9,7 +9,8 @@ export default function ProductForm({_id, title : exTitle,
     description: exDescription, 
     price: exPrice,
     images: exImages,
-    category: exCategory
+    category: exCategory,
+    properties: exprop
     }){
 
     const [title, setTitle] = useState(exTitle || '');
@@ -22,7 +23,7 @@ export default function ProductForm({_id, title : exTitle,
     const {enqueueSnackbar} = useSnackbar();
     const [categories, setCategories] = useState([]);
     const [category, setCategory] = useState(exCategory || '');
-    const [productProperties, setProductProperties] = useState({});
+    const [productProperties, setProductProperties] = useState(exprop || {});
     
     useEffect(() => {
         axios.get('/api/categories').then(result => {
