@@ -13,7 +13,7 @@ export default function Products(){
     }, []);
     return(
         <Layout>
-            <Link className = 'bg-blue-900 text-white rounded-md p-2' href = {'/products/new'}>
+            <Link className = 'btn-primary' href = {'/products/new'}>
                 Add new products
             </Link>
             <table className = 'basic mt-4'>

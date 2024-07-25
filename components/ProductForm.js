@@ -110,8 +110,8 @@ export default function ProductForm({_id, title : exTitle,
                 ))}
             </select>
             {propertiesToFill.length > 0  && propertiesToFill.map(p => (
-                <div className="flex gap-1">
-                <div>{p.name}</div>
+                <div className="">
+                <label>{p.name[0].toUpperCase()+p.name.substring(1)}</label>
                 <select value ={productProperties[p.name]} 
                     onChange = {(ev) => setProductProp(p.name, ev.target.value)}>
                     {p.values.map(v => (
@@ -127,18 +127,18 @@ export default function ProductForm({_id, title : exTitle,
                 className = 'flex flex-wrap gap-2'
                 setList = {updateImagesOrder}>
                {!!images?.length && images.map(link => (
-                    <div key = {link} className = 'h-24'>
+                    <div key = {link} className = 'h-24 bg-white'>
                         <img src = {link} alt = 'product image' className = 'rounded-xl'/>
                     </div>
                 ))
                 }
                </ReactSortable>
                 {isUploading && (
-                    <div classNmae = 'h-24 flex justify-center items-center rounded-xl p-1'>
+                    <div className = 'h-24 flex justify-center items-center rounded-xl p-1'>
                         <Spinner/>
                     </div>
                 )}
-                <label className = 'w-24 h-24 rounded-xl flex flex-col items-center justify-center text-sm text-gray-600 bg-gray-300 cursor-pointer'>
+                <label className = 'mt-0 w-24 h-24 rounded-xl flex flex-col items-center justify-center text-sm text-gray-600 border border-gray-300 shadow-sm cursor-pointer'>
                 <input type = 'file' onChange = {uploadImages} className = 'hidden'/>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
