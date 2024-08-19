@@ -31,10 +31,10 @@ table.basic{
     @apply w-full;
 }
 
-table.basic thead tr td{
+table.basic thead tr td, table.basic thead tr th{
     @apply bg-gray-200 uppercase px-4;
 }
-table.basic tr td{
+table.basic tr td th, table.basic thead tr td{
     @apply border-b border-gray-400 capitalize px-4 py-1;
 }
 
