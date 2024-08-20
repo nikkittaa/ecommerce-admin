@@ -1,40 +1,77 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# SwiftShop Admin Panel
 
-## Getting Started
+This project is an admin panel for managing the SwiftShop e-commerce site. The panel provides functionalities to manage products, categories, and orders, and includes authentication for admin users.
 
-First, run the development server:
+## Table of Contents
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Installation](#installation)
+- [Usage](#usage)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+- **Dashboard**:
+ ![dashboard-admin](https://github.com/user-attachments/assets/519ff144-7f7f-424f-8242-6d6a447c443b)
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+- **Product Management**:
+ ![products page - admin](https://github.com/user-attachments/assets/7719f97b-cae2-41f9-928b-c4921ac19545)
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+  - Add new products
+   ![new product - admin](https://github.com/user-attachments/assets/463298f5-5faa-4086-a127-6f57375d4c50)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+  - Edit existing products
+  ![edit products - admin](https://github.com/user-attachments/assets/b0bb5b58-9183-4124-8b83-60e8efad81af)
+ 
+  - 
+![popup notifications - admin](https://github.com/user-attachments/assets/937ccf0d-08af-463a-83cd-544e2bab989d)
 
-## Learn More
+  - Delete products
+ ![delete product - admin](https://github.com/user-attachments/assets/6040a23a-cdda-4b4f-9f27-91c1db957312)
 
-To learn more about Next.js, take a look at the following resources:
+- **Category Management**:
+  - Add and manage categories for organizing products
+    ![categories admin](https://github.com/user-attachments/assets/c16f39df-cfb7-41fb-b143-ed3fedc76f50)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Order Management**:
+  - View and manage customer orders
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+    ![orders- admin](https://github.com/user-attachments/assets/29b5950f-dd49-4864-98d9-8abff1018c3b)
 
-## Deploy on Vercel
+- **Authentication**:
+  - Admin login using Google via NextAuth
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    ![login with google screen](https://github.com/user-attachments/assets/45e9a562-174b-4b4a-8872-c498ec529b8a)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- **Image Storage**:
+  - Product images stored securely using AWS S3
+
+## Technologies Used
+
+- **Next.js**: React framework for server-rendered applications.
+- **Tailwind CSS**: Utility-first CSS framework for styling.
+- **NextAuth**: Authentication for Next.js applications, supporting Google OAuth.
+- **AWS S3**: Cloud storage service for storing product images.
+
+## Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/nikkittaa/ecommerce-admin.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd ecommerce-admin
+   ```
+3. Install the dependencies:
+   ```bash
+   npm install
+   ```
+
+## Usage
+
+1. Start the development server:
+   ```bash
+   npm run dev
+   ```
+2. Open your browser and go to `http://localhost:3000` to access the admin panel.
