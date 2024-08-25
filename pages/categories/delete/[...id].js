@@ -37,7 +37,7 @@ export default function DeleteCategoryPage(){
         <Layout>
            <div className = 'flex justify-center items-center w-full h-full'>
            <div className = 'border border-blue-900 w-full rounded-lg text-center py-4'>
-           <h1>Do you want to delete '{categoryInfo?.categoryName}' category permanently?</h1> 
+           <h1>Do you want to delete &apos;{categoryInfo?.categoryName}&apos; category permanently?</h1> 
             <div className = 'flex gap-3 justify-center py-2'>
                 <button onClick = {deleteCategory} className = 'border bg-red-900 text-white p-2 rounded-xl w-full mx-2'>Yes</button>
                 <button onClick = {goBack} className = 'border bg-gray-600 text-white p-2 rounded-xl w-full mx-2'>No</button>
