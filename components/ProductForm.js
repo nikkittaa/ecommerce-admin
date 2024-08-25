@@ -115,7 +115,7 @@ export default function ProductForm({_id, title : exTitle,
                 <select value ={productProperties[p.name]} 
                     onChange = {(ev) => setProductProp(p.name, ev.target.value)}>
                     {p.values.map(v => (
-                        <option value = {v}>{v}</option>
+                        <option key = {v} value = {v}>{v}</option>
                     ))}
                 </select>
                 </div>
