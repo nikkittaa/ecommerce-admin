@@ -106,7 +106,7 @@ export default function ProductForm({_id, title : exTitle,
             <select value = {category} onChange = {ev => setCategory(ev.target.value)}>
                 <option value = ''>No category</option>
                 {categories.length > 0 && categories.map(category => (
-                    <option value = {category._id}>{category.categoryName}</option>
+                    <option key = {category._id} value = {category._id}>{category.categoryName}</option>
                 ))}
             </select>
             {propertiesToFill.length > 0  && propertiesToFill.map(p => (

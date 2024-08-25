@@ -118,7 +118,7 @@ export default function Categories(){
                     <label className = 'block'>Properties</label>
                     <button onClick = {addProperty} type = 'button' className = 'btn-default text-sm'>Add new property</button>
                     {properties.length > 0 && properties.map((property, index) => (
-                        <div className = 'mt-2 flex gap-1'>
+                        <div ley = {index} className = 'mt-2 flex gap-1'>
                             <input type = 'text' 
                                 value = {property.name} 
                                 onChange = {(ev) => handlePropertyNameChange(index, property, ev.target.value)}
