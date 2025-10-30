@@ -60,7 +60,7 @@ export default function ProductForm({_id, title : exTitle,
                 data.append('file', file);
             }
             const res = await axios.post('/api/upload', data);
-            //console.log(res.data);
+            console.log(res.data);
             setImages(oldImages => {
                 return [...oldImages, ...res.data];
             })
@@ -128,7 +128,8 @@ export default function ProductForm({_id, title : exTitle,
                 setList = {updateImagesOrder}>
                {!!images?.length && images.map(link => (
                     <div key = {link} className = 'h-24 bg-white'>
-                        <img src = {link} alt = 'product image' className = 'rounded-xl'/>
+                    {console.log(link)}
+                        <img src = {`${link}`} alt = 'product image' className = 'rounded-xl'/>
                     </div>
                 ))
                 }
